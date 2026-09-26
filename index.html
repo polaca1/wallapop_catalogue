@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#152122">
+  <meta name="description" content="Explora los artículos de segunda mano de Pablo. Fotos, precios y detalles actualizados desde sus anuncios de Wallapop.">
+  <title>El rincón de Pablo · Objetos que merecen otra vuelta</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://cdn.wallapop.com" crossorigin>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div class="announcement"><span class="announcement-dot"></span> Una colección de cosas con historia, listas para seguir jugando <span class="announcement-star">✳</span></div>
+  <header class="site-header wrap">
+    <a class="brand" href="/" aria-label="Ir al inicio"><span class="brand-mark">P<span>·</span></span><span>EL RINCÓN<br>DE PABLO</span></a>
+    <nav aria-label="Navegación principal"><a href="#catalogo">El catálogo</a><a href="#como-funciona">Cómo funciona</a></nav>
+    <a class="header-cta" href="https://www.wallapop.com/user/ubicacionpablo-481568219?_pid=wi&_uid=481568219" target="_blank" rel="noopener noreferrer">Mi Wallapop <span aria-hidden="true">↗</span></a>
+  </header>
+  <main>
+    <section class="hero wrap" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="tiny-star">✳</span> BIENVENIDO A MI PEQUEÑO RINCÓN</div>
+        <h1 id="hero-title">Cosas buenas.<br><em>Segundas</em><br>oportunidades<span class="title-dot">.</span></h1>
+        <p>Una selección de objetos que todavía tienen mucho que ofrecer. Echa un vistazo, encuentra algo que te guste y hablemos por Wallapop.</p>
+        <div class="hero-actions"><a class="button button-dark" href="#catalogo">Explorar catálogo <span aria-hidden="true">↗</span></a><span class="hero-note"><span class="note-mark">✳</span> Desde Badajoz, con cariño</span></div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="hero-orbit orbit-one"></div><div class="hero-orbit orbit-two"></div>
+        <div class="hero-card"><div class="hero-card-img" id="hero-image"></div><div class="hero-card-bottom"><span>ENCONTRADO CON<br>BUEN OJO</span><span class="hero-card-arrow">↗</span></div></div>
+        <div class="hero-sticker">UNA COSA<br>MENOS QUE<br>SE TIRA ✳</div>
+        <span class="hero-sparkle sparkle-one">✳</span><span class="hero-sparkle sparkle-two">✳</span>
+      </div>
+    </section>
+    <div class="ticker" aria-hidden="true"><div>ENCUENTRA TU PRÓXIMO FAVORITO <span>✳</span> OBJETOS CON HISTORIA <span>✳</span> SEGUNDAS OPORTUNIDADES <span>✳</span> ENCUENTRA TU PRÓXIMO FAVORITO <span>✳</span> OBJETOS CON HISTORIA <span>✳</span></div></div>
+    <section class="catalog-section" id="catalogo" aria-labelledby="catalog-title">
+      <div class="wrap">
+        <div class="catalog-head"><div><div class="eyebrow">EL CATÁLOGO <span class="tiny-star">✳</span></div><h2 id="catalog-title">Mira lo que <em>hay.</em></h2><p>Anuncios reales, directamente desde mi perfil de Wallapop.</p></div><div class="catalog-count" id="catalog-count">Cargando artículos…</div></div>
+        <div class="toolbar"><label class="search-wrap"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg><span class="sr-only">Buscar productos</span><input id="search" type="search" placeholder="Busca algo especial…" autocomplete="off"></label><label class="sort-wrap"><span>ORDENAR POR</span><select id="sort" aria-label="Ordenar productos"><option value="recent">Más recientes</option><option value="price-asc">Menor precio</option><option value="price-desc">Mayor precio</option><option value="name">Nombre A–Z</option></select></label></div>
+        <div id="catalog-status" class="status" role="status" aria-live="polite"></div>
+        <div id="products" class="product-grid" aria-live="polite"></div>
+        <div class="catalog-footer"><span id="catalog-update"></span><a href="https://www.wallapop.com/user/ubicacionpablo-481568219?_pid=wi&_uid=481568219" target="_blank" rel="noopener noreferrer">Ver todo en Wallapop <span aria-hidden="true">↗</span></a></div>
+      </div>
+    </section>
+    <section class="how-section" id="como-funciona"><div class="wrap how-inner"><div><div class="eyebrow">ASÍ DE SENCILLO <span class="tiny-star">✳</span></div><h2>Lo ves aquí.<br><em>Lo hablamos allí.</em></h2></div><div class="steps"><div class="step"><span>01 /</span><p>Explora el catálogo y abre lo que te llame la atención.</p></div><div class="step"><span>02 /</span><p>Mira las fotos, el precio y todos los detalles.</p></div><div class="step"><span>03 /</span><p>Escríbeme o cómpralo con la protección de Wallapop.</p></div></div></div></section>
+    <section class="contact-section wrap"><div class="contact-icon">✳</div><h2>¿Has visto algo<br>que te gusta?</h2><p>Hablemos. Seguro que nos entendemos.</p><a class="button button-lime" href="https://www.wallapop.com/user/ubicacionpablo-481568219?_pid=wi&_uid=481568219" target="_blank" rel="noopener noreferrer">Ir a mi perfil de Wallapop <span aria-hidden="true">↗</span></a></section>
+  </main>
+  <footer class="site-footer"><div class="wrap footer-inner"><a class="brand footer-brand" href="/"><span class="brand-mark">P<span>·</span></span><span>EL RINCÓN<br>DE PABLO</span></a><p>Hecho para dar una segunda vida a las cosas. No afiliado a Wallapop.</p><span>© <span id="year"></span> Pablo</span></div></footer>
+  <dialog id="detail" class="detail-dialog" aria-label="Detalles del artículo"><div class="dialog-panel"><button class="dialog-close" id="close-detail" type="button" aria-label="Cerrar detalle">×</button><div class="detail-gallery"><div class="detail-main-img"><img id="detail-image" alt=""><button class="gallery-arrow previous" id="previous-photo" type="button" aria-label="Foto anterior">←</button><button class="gallery-arrow next" id="next-photo" type="button" aria-label="Foto siguiente">→</button><span id="gallery-counter" class="gallery-counter"></span></div><div id="thumbnails" class="thumbnails"></div></div><div class="detail-info"><span class="detail-kicker">EN VENTA EN WALLAPOP ✳</span><h2 id="detail-title"></h2><div class="detail-price" id="detail-price"></div><div class="detail-separator"></div><h3>Sobre este artículo</h3><p id="detail-description"></p><div class="detail-actions"><a id="detail-link" class="button button-dark" target="_blank" rel="noopener noreferrer">Ver en Wallapop <span aria-hidden="true">↗</span></a><button id="share" class="share-button" type="button">Copiar enlace</button></div><p class="detail-disclaimer">La compra se realiza en Wallapop. Precio y disponibilidad sujetos al anuncio original.</p></div></div></dialog>
+</body>
+</html>
