@@ -31,27 +31,54 @@ function render() {
   }
   for (const item of items) {
     const card = element('article', 'product-card');
-    card.tabIndex = 0;
-    card.setAttribute('role', 'button');
-    card.setAttribute('aria-label', `Ver ${item.title}, ${money(item.price)}`);
     const photo = element('div', 'product-photo');
-    const img = element('img');
-    img.src = item.images[0]?.small || item.images[0]?.big || '/favicon.svg';
-    img.alt = item.title;
-    img.loading = 'lazy';
-    photo.append(img);
+    const track = element('div', 'photo-track');
+    const images = item.images.length ? item.images : [{ small: '/favicon.svg' }];
+    images.forEach((image, index) => {
+      const slide = element('button', 'photo-slide');
+      slide.type = 'button';
+      slide.setAttribute('aria-label', `Abrir ${item.title}, foto ${index + 1}`);
+      const img = element('img');
+      img.src = image.small || image.big;
+      img.alt = `${item.title}, foto ${index + 1}`;
+      img.loading = 'lazy';
+      img.draggable = false;
+      slide.append(img);
+      slide.addEventListener('click', () => openDetail(item, index));
+      track.append(slide);
+    });
+    photo.append(track);
     if (item.shipping) photo.append(element('span', 'card-badge', 'ENVÍO DISPONIBLE'));
-    if (item.images.length > 1) photo.append(element('span', 'photo-count', `▣ ${item.images.length}`));
+    if (images.length > 1) {
+      const counter = element('span', 'photo-count', `1 / ${images.length}`);
+      photo.append(counter);
+      for (const [direction, label, symbol] of [[-1, 'Foto anterior', '‹'], [1, 'Foto siguiente', '›']]) {
+        const arrow = element('button', `card-photo-arrow ${direction < 0 ? 'previous' : 'next'}`, symbol);
+        arrow.type = 'button';
+        arrow.setAttribute('aria-label', `${label} de ${item.title}`);
+        arrow.addEventListener('click', () => {
+          const current = Math.round(track.scrollLeft / track.clientWidth);
+          const next = (current + direction + images.length) % images.length;
+          track.scrollTo({ left: next * track.clientWidth, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+        });
+        photo.append(arrow);
+      }
+      track.addEventListener('scroll', () => {
+        counter.textContent = `${Math.round(track.scrollLeft / track.clientWidth) + 1} / ${images.length}`;
+      }, { passive: true });
+    }
     const body = element('div', 'product-body');
     const headline = element('div', 'product-topline');
     headline.append(element('h3', '', item.title), element('span', 'product-price', money(item.price)));
-    body.append(headline, element('p', 'product-desc', item.description || 'Descubre todos los detalles del anuncio.'), element('span', 'product-link', 'Ver detalles ↗'));
+    const details = element('button', 'product-link', 'Ver detalles ↗');
+    details.type = 'button';
+    details.setAttribute('aria-label', `Ver detalles de ${item.title}`);
+    details.addEventListener('click', () => openDetail(item));
+    body.append(headline, element('p', 'product-desc', item.description || 'Descubre todos los detalles del anuncio.'), details);
     card.append(photo, body);
-    card.addEventListener('click', () => openDetail(item));
-    card.addEventListener('keydown', event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openDetail(item); } });
     grid.append(card);
   }
-  $('#catalog-count').textContent = `${products.length} ${products.length === 1 ? 'ARTÍCULO DISPONIBLE' : 'ARTÍCULOS DISPONIBLES'}`;
+  $('#catalog-count').textContent = query ? `${items.length} DE ${products.length} ARTÍCULOS` : `${products.length} ${products.length === 1 ? 'ARTÍCULO DISPONIBLE' : 'ARTÍCULOS DISPONIBLES'}`;
   $('#catalog-update').textContent = state.catalog.source === 'live' ? 'Catálogo consultado en Wallapop recientemente' : 'Mostrando una copia guardada del catálogo';
 }
 
@@ -69,13 +96,14 @@ function changePhoto(direction) {
   showPhoto();
 }
 
-function openDetail(item) {
+function openDetail(item, photoIndex = 0) {
   state.item = item;
-  state.photo = 0;
+  state.photo = photoIndex;
   $('#detail-title').textContent = item.title;
   $('#detail-price').textContent = money(item.price);
   $('#detail-description').textContent = item.description || 'Consulta todos los detalles en el anuncio de Wallapop.';
   $('#detail-link').href = item.url;
+  $('#detail-whatsapp').href = 'https://api.whatsapp.com/send?' + new URLSearchParams({ phone: '34623351207', text: `Hola 3DPrintNova, me interesa este diseño: ${item.title}\n${item.url}\n¿Me confirmáis disponibilidad, colores, precio y plazo? Gracias.` });
   $('#share').textContent = 'Copiar enlace';
   const thumbs = $('#thumbnails');
   thumbs.replaceChildren();
@@ -159,7 +187,7 @@ function dimensionsText(values) {
 function updateRequestSummary() {
   const size = document.querySelector('input[name="size-choice"]:checked').value;
   const dimensions = exactDimensions();
-  $('#request-summary').textContent = `${dimensions ? dimensionsText(dimensions) : SIZE_LABELS[size].split(' (')[0]} · ${MATERIAL_LABELS[$('#model-material').value]}`;
+  $('#request-summary').textContent = `${dimensions ? dimensionsText(dimensions) : SIZE_LABELS[size].split(' (')[0]} · ${MATERIAL_LABELS[$('#model-material').value]} · ${$('#model-quantity').value || '—'} ud.`;
 }
 
 function updateMaterial() {
@@ -212,11 +240,16 @@ function buildRequestMessage() {
     dimensions ? `Medidas (ancho × alto × fondo): ${dimensionsText(dimensions)}` : 'Medidas exactas: por confirmar',
     `Uso: ${use}`,
     `Material solicitado: ${MATERIAL_LABELS[$('#model-material').value]}`,
+    `Color preferido: ${$('#model-color').value.trim() || 'Que me aconsejéis'}`,
+    `Cantidad: ${$('#model-quantity').value} pieza(s)`,
+    `Entrega: ${$('#model-delivery').value}`,
+    ...($('#model-notes').value.trim() ? [`Notas: ${$('#model-notes').value.trim()}`] : []),
     '',
-    '¿Me confirmáis el precio, la disponibilidad del material y el plazo? Gracias.'
+    '¿Me confirmáis el precio total, colores y material disponibles, plazo y opciones y gastos de entrega? Gracias.'
   ].join('\n');
 }
 
+$('#model-quantity').addEventListener('input', updateRequestSummary);
 $('#model-url').addEventListener('input', validateModelUrl);
 dimensionInputs.forEach(input => {
   input.addEventListener('input', updateDimensions);
