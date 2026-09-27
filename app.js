@@ -23,7 +23,7 @@ function render() {
   grid.replaceChildren();
   if (!items.length) {
     const empty = element('div', 'empty-state');
-    empty.append(element('h3', '', query ? 'No encontramos coincidencias.' : 'Aún no hay artículos en venta.'), element('p', '', query ? 'Prueba con otra palabra o borra la búsqueda.' : 'Vuelve pronto para descubrir nuevas cosas.'));
+    empty.append(element('h3', '', query ? 'No encontramos coincidencias.' : 'Aún no hay artículos en venta.'), element('p', '', query ? 'Prueba con otra palabra o borra la búsqueda.' : 'Vuelve pronto para ver nuevos diseños.'));
     grid.append(empty);
   }
   for (const item of items) {
