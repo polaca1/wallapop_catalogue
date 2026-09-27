@@ -13,3 +13,11 @@ No se requieren claves de API ni variables de entorno. La función `api/catalog.
 ## Ejecutar en local
 
 Con Node.js 20 o posterior: `npm run dev` y abre http://localhost:3000. Ejecuta `npm test` para probar la normalización de los datos. No hay dependencias externas.
+
+## Impresión personalizada
+
+El anuncio `impresiones-3d-1292053393` se presenta como un servicio, no como un producto de precio cero. La web muestra los demás anuncios en el catálogo.
+
+El formulario de servicio prepara una solicitud en `https://api.whatsapp.com/send` para el número público `34623351207`. Incluye enlace público del modelo, tamaño, medidas opcionales, uso y material solicitado. Solo se abre WhatsApp tras pulsar el botón; el cliente revisa y envía el mensaje. La web no descarga ni sube archivos de modelos.
+
+Los tamaños son rangos orientativos por el lado más largo: pequeño hasta 10 cm, mediano hasta 20 cm y grande por encima de 20 cm. Las tres medidas introducidas calculan ese rango automáticamente. El material se recomienda por uso (PLA para decoración de interior, PETG para piezas rígidas funcionales y TPU para piezas flexibles), permite elección manual y queda sujeto a confirmación con el presupuesto.

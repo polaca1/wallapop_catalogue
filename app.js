@@ -1,6 +1,8 @@
 const $ = selector => document.querySelector(selector);
 const money = amount => new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 2 }).format(amount);
 const state = { catalog: null, photo: 0, item: null };
+// The logo listing advertises the custom printing service, not a product.
+const isPrintingService = item => item.id === '3zlm3mkxm4jx' || /impresiones-3d-1292053393(?:$|[?#])/.test(item.url || '');
 
 function element(tag, className, content) {
   const node = document.createElement(tag);
@@ -11,7 +13,8 @@ function element(tag, className, content) {
 
 function render() {
   if (!state.catalog) return;
-  let items = [...state.catalog.items];
+  const products = state.catalog.items.filter(item => !isPrintingService(item));
+  let items = [...products];
   const query = $('#search').value.trim().toLocaleLowerCase('es');
   if (query) items = items.filter(item => `${item.title} ${item.description}`.toLocaleLowerCase('es').includes(query));
   switch ($('#sort').value) {
@@ -48,10 +51,8 @@ function render() {
     card.addEventListener('keydown', event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openDetail(item); } });
     grid.append(card);
   }
-  $('#catalog-count').textContent = `${state.catalog.items.length} ${state.catalog.items.length === 1 ? 'ARTÍCULO DISPONIBLE' : 'ARTÍCULOS DISPONIBLES'}`;
+  $('#catalog-count').textContent = `${products.length} ${products.length === 1 ? 'ARTÍCULO DISPONIBLE' : 'ARTÍCULOS DISPONIBLES'}`;
   $('#catalog-update').textContent = state.catalog.source === 'live' ? 'Catálogo consultado en Wallapop recientemente' : 'Mostrando una copia guardada del catálogo';
-  const heroPhoto = state.catalog.items[0]?.images[0]?.big;
-  if (heroPhoto) $('#hero-image').style.backgroundImage = `url(${JSON.stringify(heroPhoto)})`;
 }
 
 function showPhoto() {
@@ -128,5 +129,114 @@ $('#share').addEventListener('click', async () => {
   try { await navigator.clipboard.writeText(state.item.url); $('#share').textContent = 'Enlace copiado ✓'; }
   catch { $('#share').textContent = 'No se pudo copiar'; }
 });
+// Custom printing request: model links stay in the browser until the visitor
+// chooses to open WhatsApp. No model is downloaded or uploaded by this form.
+const SIZE_LABELS = { small: 'Pequeño (hasta 10 cm)', medium: 'Mediano (más de 10 a 20 cm)', large: 'Grande (más de 20 cm)' };
+const MATERIAL_LABELS = { PLA: 'PLA', PETG: 'PETG', TPU: 'TPU flexible', ADVICE: 'Que me aconsejéis' };
+const MATERIAL_GUIDE = {
+  decorative: { material: 'PLA', title: 'Recomendado: PLA', copy: 'Para decoración y maquetas de interior. Buen acabado y una opción sencilla para empezar.' },
+  functional: { material: 'PETG', title: 'Recomendado: PETG', copy: 'Una opción para piezas rígidas de uso diario que necesitan más tenacidad que el PLA. Revisaremos las exigencias concretas del modelo.' },
+  flexible: { material: 'TPU', title: 'Recomendado: TPU flexible', copy: 'Para piezas que deben doblarse o ser elásticas. El grado de flexibilidad se concreta al revisar el modelo.' },
+  unsure: { material: 'ADVICE', title: 'Te ayudamos a elegir', copy: 'Revisaremos el modelo y te propondremos un material adecuado antes de confirmar el presupuesto.' }
+};
+const dimensionInputs = [...document.querySelectorAll('.dimension-input')];
+let automaticMaterial = true;
+
+function sizeFromDimensions(dimensions) {
+  const longest = Math.max(...dimensions);
+  return longest <= 10 ? 'small' : longest <= 20 ? 'medium' : 'large';
+}
+
+function exactDimensions() {
+  const values = dimensionInputs.map(input => Number(input.value));
+  return dimensionInputs.every(input => input.value !== '' && input.validity.valid) && values.every(value => Number.isFinite(value) && value > 0) ? values : null;
+}
+
+function dimensionsText(values) {
+  return values.map(value => value.toLocaleString('es-ES', { maximumFractionDigits: 1 })).join(' × ') + ' cm';
+}
+
+function updateRequestSummary() {
+  const size = document.querySelector('input[name="size-choice"]:checked').value;
+  const dimensions = exactDimensions();
+  $('#request-summary').textContent = `${dimensions ? dimensionsText(dimensions) : SIZE_LABELS[size].split(' (')[0]} · ${MATERIAL_LABELS[$('#model-material').value]}`;
+}
+
+function updateMaterial() {
+  const guide = MATERIAL_GUIDE[$('#model-use').value];
+  if (automaticMaterial) $('#model-material').value = guide.material;
+  $('#material-recommendation-title').textContent = guide.title;
+  $('#material-recommendation-copy').textContent = guide.copy;
+  $('#use-recommended').hidden = $('#model-material').value === guide.material;
+  updateRequestSummary();
+}
+
+function updateDimensions() {
+  dimensionInputs.forEach(input => input.setCustomValidity(''));
+  const filled = dimensionInputs.filter(input => input.value !== '');
+  if (filled.length && filled.length < 3) {
+    dimensionInputs.find(input => input.value === '').setCustomValidity('Introduce las tres medidas o déjalas todas vacías.');
+  }
+  const dimensions = exactDimensions();
+  if (dimensions) {
+    const size = sizeFromDimensions(dimensions);
+    document.querySelector(`input[name="size-choice"][value="${size}"]`).checked = true;
+    $('#dimension-status').textContent = `Tamaño calculado: ${SIZE_LABELS[size].split(' (')[0].toLocaleLowerCase('es')}. Medidas: ${dimensionsText(dimensions)}.`;
+  } else {
+    $('#dimension-status').textContent = filled.length ? 'Completa las tres medidas con números mayores que cero, o borra todas para usar un tamaño aproximado.' : 'Introduce las tres medidas para calcular el tamaño automáticamente.';
+  }
+  updateRequestSummary();
+}
+
+function validateModelUrl() {
+  const input = $('#model-url');
+  input.setCustomValidity('');
+  if (!input.value.trim()) return;
+  try {
+    const url = new URL(input.value.trim());
+    if (!['https:', 'http:'].includes(url.protocol) || !url.hostname || url.username || url.password) throw new Error('Invalid model link');
+  } catch {
+    input.setCustomValidity('Pega un enlace completo que empiece por https:// o http://, sin contraseñas.');
+  }
+}
+
+function buildRequestMessage() {
+  const size = document.querySelector('input[name="size-choice"]:checked').value;
+  const dimensions = exactDimensions();
+  const use = $('#model-use').selectedOptions[0].textContent;
+  return [
+    'Hola 3DPrintNova, me gustaría pedir presupuesto para imprimir este modelo:',
+    '',
+    `Enlace: ${$('#model-url').value.trim()}`,
+    `Tamaño: ${SIZE_LABELS[size]}${dimensions ? ' — calculado por el lado más largo' : ' — aproximado'}`,
+    dimensions ? `Medidas (ancho × alto × fondo): ${dimensionsText(dimensions)}` : 'Medidas exactas: por confirmar',
+    `Uso: ${use}`,
+    `Material solicitado: ${MATERIAL_LABELS[$('#model-material').value]}`,
+    '',
+    '¿Me confirmáis el precio, la disponibilidad del material y el plazo? Gracias.'
+  ].join('\n');
+}
+
+$('#model-url').addEventListener('input', validateModelUrl);
+dimensionInputs.forEach(input => {
+  input.addEventListener('input', updateDimensions);
+  input.addEventListener('invalid', () => { input.closest('details').open = true; });
+});
+document.querySelectorAll('input[name="size-choice"]').forEach(input => input.addEventListener('change', () => {
+  dimensionInputs.forEach(field => { field.value = ''; field.setCustomValidity(''); });
+  updateDimensions();
+}));
+$('#model-use').addEventListener('change', updateMaterial);
+$('#model-material').addEventListener('change', () => { automaticMaterial = false; updateMaterial(); });
+$('#use-recommended').addEventListener('click', () => { automaticMaterial = true; updateMaterial(); });
+$('#service-form').addEventListener('submit', event => {
+  validateModelUrl();
+  updateDimensions();
+  if (!event.currentTarget.reportValidity()) { event.preventDefault(); return; }
+  $('#whatsapp-message').value = buildRequestMessage();
+});
+$('#service-form').addEventListener('formdata', event => event.formData.delete('size-choice'));
+updateMaterial();
+
 $('#year').textContent = new Date().getFullYear();
 load();

@@ -3,50 +3,74 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#152122">
-  <meta name="description" content="Explora las impresiones 3D de 3DPrintNova. Fotos, precios y detalles de sus anuncios en Wallapop.">
-  <title>3DPrintNova · Impresiones 3D en Wallapop</title>
+  <meta name="theme-color" content="#090b12">
+  <meta name="description" content="Impresión 3D personalizada con 3DPrintNova. Envíanos el enlace de tu modelo, elige tamaño y material y pide presupuesto por WhatsApp.">
+  <title>3DPrintNova · Tu modelo, impreso en 3D</title>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://cdn.wallapop.com" crossorigin>
   <link rel="stylesheet" href="/styles.css">
   <script src="/app.js" defer></script>
 </head>
 <body>
-  <div class="announcement"><span class="announcement-dot"></span> Objetos impresos en 3D, ideas hechas realidad <span class="announcement-star">✳</span></div>
   <header class="site-header wrap">
-    <a class="brand" href="/" aria-label="Ir al inicio"><span class="brand-mark">3<span>D</span></span><span>PRINT<br>NOVA</span></a>
-    <nav aria-label="Navegación principal"><a href="#catalogo">El catálogo</a><a href="#como-funciona">Cómo funciona</a></nav>
-    <a class="header-cta" href="https://www.wallapop.com/user/diegoc-480763225" target="_blank" rel="noopener noreferrer">Mi Wallapop <span aria-hidden="true">↗</span></a>
+    <a class="brand" href="/" aria-label="3DPrintNova, inicio"><img src="https://cdn.wallapop.com/images/10420/ld/96/__/c10420p1292053393/i6681167412.jpg?pictureSize=W320" width="52" height="52" alt=""><span><strong><span class="brand-cyan">3D</span>Print<span class="brand-purple">Nova</span></strong><small>IMPRESIÓN 3D</small></span></a>
+    <nav aria-label="Navegación principal"><a href="#servicio">Imprime tu modelo</a><a href="#catalogo">Catálogo</a></nav>
+    <a class="header-cta" href="https://api.whatsapp.com/send?phone=34623351207&amp;text=Hola%203DPrintNova%2C%20quiero%20consultar%20una%20impresi%C3%B3n%203D." target="_blank" rel="noopener noreferrer">WhatsApp <span aria-hidden="true">↗</span></a>
   </header>
   <main>
     <section class="hero wrap" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <div class="eyebrow"><span class="tiny-star">✳</span> BIENVENIDO A 3DPRINTNOVA</div>
-        <h1 id="hero-title">Ideas que<br><em>toman</em><br>forma<span class="title-dot">.</span></h1>
-        <p>Descubre juguetes, decoración y accesorios impresos en 3D. Explora los diseños disponibles y consulta cada anuncio en Wallapop.</p>
-        <div class="hero-actions"><a class="button button-dark" href="#catalogo">Ver impresiones 3D <span aria-hidden="true">↗</span></a><span class="hero-note"><span class="note-mark">✳</span> Desde Badajoz</span></div>
+        <div class="eyebrow">DE TU PANTALLA AL MUNDO REAL</div>
+        <h1 id="hero-title">Tú imaginas.<br><em>Nosotros<br>imprimimos.</em></h1>
+        <p>¿Tienes un modelo en MakerWorld, Bambu Lab o en otro sitio? Mándanos el enlace y le damos forma.</p>
+        <div class="hero-actions"><a class="button button-primary" href="#servicio">Imprimir mi modelo <span aria-hidden="true">↗</span></a><a class="text-link" href="#catalogo">Explorar catálogo</a></div>
+        <span class="hero-note">Impresiones 3D desde Badajoz</span>
       </div>
-      <div class="hero-visual" aria-hidden="true">
-        <div class="hero-orbit orbit-one"></div><div class="hero-orbit orbit-two"></div>
-        <div class="hero-card"><div class="hero-card-img" id="hero-image"></div><div class="hero-card-bottom"><span>IMPRESO EN 3D<br>PARA TI</span><span class="hero-card-arrow">↗</span></div></div>
-        <div class="hero-sticker">IMAGINA<br>CREA<br>IMPRIME ✳</div>
-        <span class="hero-sparkle sparkle-one">✳</span><span class="hero-sparkle sparkle-two">✳</span>
+      <div class="hero-visual"><img class="hero-logo" src="https://cdn.wallapop.com/images/10420/ld/96/__/c10420p1292053393/i6681167412.jpg?pictureSize=W800" width="800" height="800" alt="Logo 3DPrintNova con una pieza impresa en cian y violeta"><span class="hero-caption">IDEAS · DISEÑO · IMPRESIÓN</span></div>
+    </section>
+    <section class="service-section" id="servicio" aria-labelledby="service-title">
+      <div class="wrap service-layout">
+        <div class="service-intro">
+          <div class="eyebrow">SERVICIO DE IMPRESIÓN A MEDIDA</div>
+          <h2 id="service-title">Mándanos el modelo.<br><em>Te lo imprimimos.</em></h2>
+          <p>Prepara tu solicitud y cuéntanos qué necesitas. Revisaremos el modelo y te confirmaremos el presupuesto por WhatsApp.</p>
+          <ol class="service-steps"><li><span>01</span> Pega el enlace del modelo</li><li><span>02</span> Elige tamaño y material</li><li><span>03</span> Pide presupuesto por WhatsApp</li></ol>
+          <a class="contact-phone" href="tel:+34623351207">+34 623 35 12 07</a>
+          <p class="service-note">El precio depende del modelo, el tamaño y el material. La solicitud no implica un pago.</p>
+        </div>
+        <form id="service-form" class="service-form" action="https://api.whatsapp.com/send" target="_blank" rel="noopener noreferrer">
+          <input type="hidden" name="phone" value="34623351207">
+          <input type="hidden" name="text" id="whatsapp-message">
+          <div class="field"><label for="model-url"><span class="field-number">01</span> Enlace del modelo</label><input id="model-url" type="url" required maxlength="2000" placeholder="https://makerworld.com/…" autocomplete="off" aria-describedby="model-help"><p id="model-help" class="field-help">Pega un enlace público al modelo o al archivo. No necesitas subirlo aquí.</p></div>
+          <fieldset class="size-field"><legend><span class="field-number">02</span> Tamaño de la pieza</legend><p class="field-help">Según la medida del lado más largo.</p><div class="size-options">
+            <label class="size-option"><input type="radio" name="size-choice" value="small"><span><strong>Pequeño</strong><small>Hasta 10 cm</small></span></label>
+            <label class="size-option"><input type="radio" name="size-choice" value="medium" checked><span><strong>Mediano</strong><small>Más de 10 a 20 cm</small></span></label>
+            <label class="size-option"><input type="radio" name="size-choice" value="large"><span><strong>Grande</strong><small>Más de 20 cm</small></span></label>
+          </div><details class="dimension-details"><summary>Tengo las medidas exactas</summary><div class="dimensions">
+            <label for="model-width">Ancho (cm)<input id="model-width" class="dimension-input" type="number" min="0.1" step="0.1" inputmode="decimal" placeholder="15"></label>
+            <label for="model-height">Alto (cm)<input id="model-height" class="dimension-input" type="number" min="0.1" step="0.1" inputmode="decimal" placeholder="12"></label>
+            <label for="model-depth">Fondo (cm)<input id="model-depth" class="dimension-input" type="number" min="0.1" step="0.1" inputmode="decimal" placeholder="8"></label>
+          </div><p id="dimension-status" class="field-help" aria-live="polite">Introduce las tres medidas para calcular el tamaño automáticamente.</p></details></fieldset>
+          <fieldset><legend><span class="field-number">03</span> Uso y material</legend><div class="material-fields"><div class="field"><label for="model-use">¿Para qué lo necesitas?</label><select id="model-use"><option value="decorative">Decoración o maqueta</option><option value="functional">Pieza funcional rígida</option><option value="flexible">Pieza flexible</option><option value="unsure">No estoy seguro</option></select></div><div class="field"><label for="model-material">Material solicitado</label><select id="model-material"><option value="PLA">PLA</option><option value="PETG">PETG</option><option value="TPU">TPU flexible</option><option value="ADVICE">Que me aconsejéis</option></select></div></div>
+          <div class="material-recommendation" aria-live="polite"><strong id="material-recommendation-title">Recomendado: PLA</strong><p id="material-recommendation-copy">Para decoración y maquetas de interior. Buen acabado y una opción sencilla para empezar.</p><button id="use-recommended" type="button" class="text-button" hidden>Usar el recomendado</button></div>
+          <p class="field-help">La recomendación depende del uso, no solo del tamaño. Confirmaremos la disponibilidad del material al presupuestar.</p></fieldset>
+          <div class="request-summary"><span>TU SOLICITUD</span><strong id="request-summary">Mediano · PLA</strong></div>
+          <button class="button button-primary whatsapp-submit" type="submit">Pedir presupuesto por WhatsApp <span aria-hidden="true">↗</span></button>
+          <p class="submit-help">Se abrirá WhatsApp con el enlace, el tamaño y el material. Revisa el mensaje y pulsa Enviar.</p>
+          <noscript><p class="field-help">Activa JavaScript para preparar el mensaje o contacta en el +34 623 35 12 07.</p></noscript>
+        </form>
       </div>
     </section>
-    <div class="ticker" aria-hidden="true"><div>IMPRESIONES 3D <span>✳</span> DISEÑOS ORIGINALES <span>✳</span> IDEAS A MEDIDA <span>✳</span> IMPRESIONES 3D <span>✳</span> DISEÑOS ORIGINALES <span>✳</span></div></div>
     <section class="catalog-section" id="catalogo" aria-labelledby="catalog-title">
       <div class="wrap">
-        <div class="catalog-head"><div><div class="eyebrow">EL CATÁLOGO <span class="tiny-star">✳</span></div><h2 id="catalog-title">Mira lo que <em>creamos.</em></h2><p>Diseños y artículos publicados en el perfil de 3DPrintNova en Wallapop.</p></div><div class="catalog-count" id="catalog-count">Cargando artículos…</div></div>
-        <div class="toolbar"><label class="search-wrap"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg><span class="sr-only">Buscar productos</span><input id="search" type="search" placeholder="Busca un diseño…" autocomplete="off"></label><label class="sort-wrap"><span>ORDENAR POR</span><select id="sort" aria-label="Ordenar productos"><option value="recent">Más recientes</option><option value="price-asc">Menor precio</option><option value="price-desc">Mayor precio</option><option value="name">Nombre A–Z</option></select></label></div>
-        <div id="catalog-status" class="status" role="status" aria-live="polite"></div>
-        <div id="products" class="product-grid" aria-live="polite"></div>
-        <div class="catalog-footer"><span id="catalog-update"></span><a href="https://www.wallapop.com/user/diegoc-480763225" target="_blank" rel="noopener noreferrer">Ver todo en Wallapop <span aria-hidden="true">↗</span></a></div>
+        <div class="catalog-head"><div><div class="eyebrow">EL CATÁLOGO</div><h2 id="catalog-title">Ya tienen <em>forma.</em></h2><p>Descubre nuestros diseños y consulta cada artículo en Wallapop.</p></div><div class="catalog-count" id="catalog-count">Cargando artículos…</div></div>
+        <div class="toolbar"><label class="search-wrap"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg><span class="sr-only">Buscar productos</span><input id="search" type="search" placeholder="Busca un diseño…" autocomplete="off"></label><label class="sort-wrap"><span>Ordenar</span><select id="sort" aria-label="Ordenar productos"><option value="recent">Más recientes</option><option value="price-asc">Menor precio</option><option value="price-desc">Mayor precio</option><option value="name">Nombre A–Z</option></select></label></div>
+        <div id="catalog-status" class="status" role="status" aria-live="polite"></div><div id="products" class="product-grid" aria-live="polite"></div>
+        <div class="catalog-footer"><span id="catalog-update"></span><a href="https://www.wallapop.com/user/diegoc-480763225" target="_blank" rel="noopener noreferrer">Ver perfil de Wallapop <span aria-hidden="true">↗</span></a></div>
       </div>
     </section>
-    <section class="how-section" id="como-funciona"><div class="wrap how-inner"><div><div class="eyebrow">ASÍ DE SENCILLO <span class="tiny-star">✳</span></div><h2>Lo ves aquí.<br><em>Lo hablamos allí.</em></h2></div><div class="steps"><div class="step"><span>01 /</span><p>Explora los diseños y abre el que te interese.</p></div><div class="step"><span>02 /</span><p>Consulta las fotos, el precio y los detalles del anuncio.</p></div><div class="step"><span>03 /</span><p>Pregunta por un diseño o haz la compra directamente en Wallapop.</p></div></div></div></section>
-    <section class="contact-section wrap"><div class="contact-icon">✳</div><h2>¿Tienes una idea<br>para imprimir?</h2><p>Escribe a 3DPrintNova desde su perfil de Wallapop.</p><a class="button button-lime" href="https://www.wallapop.com/user/diegoc-480763225" target="_blank" rel="noopener noreferrer">Contactar en Wallapop <span aria-hidden="true">↗</span></a></section>
   </main>
-  <footer class="site-footer"><div class="wrap footer-inner"><a class="brand footer-brand" href="/"><span class="brand-mark">3<span>D</span></span><span>PRINT<br>NOVA</span></a><p>Catálogo de 3DPrintNova. No afiliado a Wallapop.</p><span>© <span id="year"></span> 3DPrintNova</span></div></footer>
-  <dialog id="detail" class="detail-dialog" aria-label="Detalles del artículo"><div class="dialog-panel"><button class="dialog-close" id="close-detail" type="button" aria-label="Cerrar detalle">×</button><div class="detail-gallery"><div class="detail-main-img"><img id="detail-image" alt=""><button class="gallery-arrow previous" id="previous-photo" type="button" aria-label="Foto anterior">←</button><button class="gallery-arrow next" id="next-photo" type="button" aria-label="Foto siguiente">→</button><span id="gallery-counter" class="gallery-counter"></span></div><div id="thumbnails" class="thumbnails"></div></div><div class="detail-info"><span class="detail-kicker">EN VENTA EN WALLAPOP ✳</span><h2 id="detail-title"></h2><div class="detail-price" id="detail-price"></div><div class="detail-separator"></div><h3>Sobre este artículo</h3><p id="detail-description"></p><div class="detail-actions"><a id="detail-link" class="button button-dark" target="_blank" rel="noopener noreferrer">Ver en Wallapop <span aria-hidden="true">↗</span></a><button id="share" class="share-button" type="button">Copiar enlace</button></div><p class="detail-disclaimer">La compra se realiza en Wallapop. Precio y disponibilidad sujetos al anuncio original.</p></div></div></dialog>
+  <footer class="site-footer"><div class="wrap footer-inner"><a class="brand" href="/"><span><strong><span class="brand-cyan">3D</span>Print<span class="brand-purple">Nova</span></strong><small>IMPRESIÓN 3D</small></span></a><a class="footer-phone" href="tel:+34623351207">+34 623 35 12 07</a><p>© <span id="year"></span> 3DPrintNova<br>Catálogo independiente. No afiliado a Wallapop.</p></div></footer>
+  <dialog id="detail" class="detail-dialog" aria-label="Detalles del artículo"><div class="dialog-panel"><button class="dialog-close" id="close-detail" type="button" aria-label="Cerrar detalle">×</button><div class="detail-gallery"><div class="detail-main-img"><img id="detail-image" alt=""><button class="gallery-arrow previous" id="previous-photo" type="button" aria-label="Foto anterior">←</button><button class="gallery-arrow next" id="next-photo" type="button" aria-label="Foto siguiente">→</button><span id="gallery-counter" class="gallery-counter"></span></div><div id="thumbnails" class="thumbnails"></div></div><div class="detail-info"><span class="detail-kicker">EN VENTA EN WALLAPOP</span><h2 id="detail-title"></h2><div class="detail-price" id="detail-price"></div><div class="detail-separator"></div><h3>Sobre este artículo</h3><p id="detail-description"></p><div class="detail-actions"><a id="detail-link" class="button button-primary" target="_blank" rel="noopener noreferrer">Ver en Wallapop <span aria-hidden="true">↗</span></a><button id="share" class="share-button" type="button">Copiar enlace</button></div><p class="detail-disclaimer">La compra se realiza en Wallapop. Precio y disponibilidad sujetos al anuncio original.</p></div></div></dialog>
 </body>
 </html>
