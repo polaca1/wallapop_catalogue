@@ -1,5 +1,5 @@
-const USER_ID = 'vjrdvxx8nx6k';
-const PROFILE_URL = 'https://www.wallapop.com/user/ubicacionpablo-481568219';
+const USER_ID = 'mznlm0ge0gjn';
+const PROFILE_URL = 'https://www.wallapop.com/user/diegoc-480763225';
 const API = 'https://api.wallapop.com/api/v3';
 
 function safeImage(value) {
@@ -13,7 +13,7 @@ export function normalize(profile, listingPages) {
   const items = listingPages.flatMap(page => Array.isArray(page?.data) ? page.data : []);
   return {
     profile: {
-      name: String(profile.micro_name || 'Pablo'),
+      name: String(profile.micro_name || '3DPrintNova ..'),
       city: String(profile.location?.city || 'España'),
       avatar: safeImage(profile.image?.urls_by_size?.medium || profile.image?.urls_by_size?.small),
       url: PROFILE_URL
@@ -42,7 +42,7 @@ async function getJson(url) {
   const timeout = setTimeout(() => controller.abort(), 8500);
   try {
     const response = await fetch(url, {
-      headers: { 'Accept': 'application/json', 'User-Agent': 'Mozilla/5.0 (compatible; PabloCatalog/1.0)' },
+      headers: { 'Accept': 'application/json', 'User-Agent': 'Mozilla/5.0 (compatible; 3DPrintNovaCatalog/1.0)' },
       signal: controller.signal
     });
     if (!response.ok) throw new Error(`Wallapop returned ${response.status}`);
