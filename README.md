@@ -1,6 +1,6 @@
-# El rincón de Pablo
+# 3DPrintNova
 
-Catálogo independiente de los anuncios públicos del perfil [Pablo en Wallapop](https://www.wallapop.com/user/ubicacionpablo-481568219). Incluye fotos, títulos, descripciones y precios, con enlaces para ver o comprar cada producto en Wallapop.
+Catálogo independiente de los anuncios públicos del perfil [3DPrintNova en Wallapop](https://www.wallapop.com/user/diegoc-480763225). Incluye fotos, títulos, descripciones y precios, con enlaces para ver o comprar cada producto en Wallapop.
 
 ## Desplegar en Vercel
 
